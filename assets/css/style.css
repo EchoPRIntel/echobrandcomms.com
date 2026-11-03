@@ -581,3 +581,19 @@ body.menu-open .nav { color: var(--paper); background: transparent; box-shadow: 
 .head-row .h2 { max-width: 16ch; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .img-cover { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Press coverage (results page) ---------- */
+.coverage .strip-head span { white-space: nowrap; }
+.cov-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line-light); border-left: 1px solid var(--line-light); }
+.cov-card { padding: 26px 22px 28px; border-right: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); display: flex; flex-direction: column; gap: 10px; transition: background .3s; }
+.cov-card:hover { background: rgba(246,243,238,.04); }
+.cov-card--flag { background: var(--ink); }
+.cov-card--flag:hover { background: #1d1b19; }
+.cov-card h3 { font-size: 21px; line-height: 1.2; }
+.cov-card .reach { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--mist); }
+.cov-card p { font-size: 14px; line-height: 1.55; color: rgba(246,243,238,.7); }
+.cov-names { display: flex; flex-wrap: wrap; gap: 10px; }
+.cov-names li { border: 1px solid var(--line-light); border-radius: 999px; padding: 10px 18px; font-size: 14px; letter-spacing: .01em; }
+@media (max-width: 1100px) { .cov-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .cov-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .coverage .strip-head span { white-space: normal; } }
+@media (max-width: 460px) { .cov-grid { grid-template-columns: minmax(0, 1fr); } }
