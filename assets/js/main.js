@@ -381,6 +381,25 @@
     setSvc(0);
   }
 
+  /* ---------- Press coverage carousel (scroll-snap) ---------- */
+  document.querySelectorAll('.cov-carousel').forEach(function (c) {
+    var track = c.querySelector('.cov-track'), bar = c.querySelector('.carousel-bar i');
+    var step = function () { var card = track.querySelector('.cov-card'); return card ? card.offsetWidth + 16 : track.clientWidth; };
+    var prev = c.querySelector('[data-cov-prev]'), next = c.querySelector('[data-cov-next]');
+    function update() {
+      var max = track.scrollWidth - track.clientWidth;
+      if (bar) bar.style.width = (max > 0 ? Math.max(12, (track.scrollLeft + track.clientWidth) / track.scrollWidth * 100) : 100) + '%';
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max - 2;
+    }
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -step() }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: step() }); });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    track.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); track.scrollBy({ left: step() }); } if (e.key === 'ArrowLeft') { e.preventDefault(); track.scrollBy({ left: -step() }); } });
+    update();
+  });
+
   /* ---------- Year ---------- */
   document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

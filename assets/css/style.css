@@ -653,3 +653,16 @@ body.menu-open .nav { color: var(--paper); background: transparent; box-shadow: 
 @media (prefers-reduced-motion: reduce) { .svc-stage-frame img, .svc-item { transition: none; } }
 .figure .caption span:last-child { text-align: right; }
 @media (max-width: 600px) { .figure .caption { flex-direction: column; gap: 6px; } .figure .caption span:last-child { text-align: left; } }
+
+/* ---------- Press coverage carousel ---------- */
+.cov-track { display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 3 * 16px) / 4); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; overscroll-behavior-x: contain; }
+.cov-track::-webkit-scrollbar { display: none; }
+.cov-track .cov-card { scroll-snap-align: start; border: 1px solid var(--line-light); border-radius: var(--radius); min-height: 270px; }
+.cov-track .cov-card .kicker { align-self: flex-start; font-size: 10.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--mist); border: 1px solid var(--line-light); border-radius: 999px; padding: 5px 10px; margin-bottom: 8px; }
+.cov-track .cov-card h3 { font-size: clamp(22px, 2vw, 26px); }
+.cov-track .cov-card p { margin-top: auto; padding-top: 12px; }
+.cov-carousel .carousel-nav { margin-top: 32px; }
+@media (max-width: 1100px) { .cov-track { grid-auto-columns: calc((100% - 2 * 16px) / 3); } }
+@media (max-width: 760px) { .cov-track { grid-auto-columns: 78%; } }
+@media (prefers-reduced-motion: reduce) { .cov-track { scroll-behavior: auto; } }
+.carousel-btn:disabled { opacity: .35; pointer-events: none; }
