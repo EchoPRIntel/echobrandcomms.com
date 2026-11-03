@@ -666,3 +666,12 @@ body.menu-open .nav { color: var(--paper); background: transparent; box-shadow: 
 @media (max-width: 760px) { .cov-track { grid-auto-columns: 78%; } }
 @media (prefers-reduced-motion: reduce) { .cov-track { scroll-behavior: auto; } }
 .carousel-btn:disabled { opacity: .35; pointer-events: none; }
+
+/* ---------- Also featured in: logo grid ---------- */
+.cov-logos { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-top: 1px solid var(--line-light); border-left: 1px solid var(--line-light); }
+.cov-logos div { height: 110px; display: grid; place-items: center; padding: 20px; border-right: 1px solid var(--line-light); border-bottom: 1px solid var(--line-light); transition: background .3s; }
+.cov-logos div:hover { background: rgba(246,243,238,.04); }
+.cov-logos img { max-height: 30px; width: auto; max-width: 100%; }
+.cov-logos .wm { font-family: var(--display); font-size: clamp(17px, 1.5vw, 21px); line-height: 1.15; text-align: center; color: var(--paper); opacity: .85; letter-spacing: .01em; }
+@media (max-width: 900px) { .cov-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .cov-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cov-logos div { height: 90px; } }
