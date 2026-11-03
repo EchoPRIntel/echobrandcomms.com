@@ -356,6 +356,31 @@
   var faqs = document.querySelectorAll('.faq details');
   faqs.forEach(function (d) { d.addEventListener('toggle', function () { if (d.open) faqs.forEach(function (o) { if (o !== d) o.open = false; }); }); });
 
+  /* ---------- Services: sticky stage follows the list ---------- */
+  var scroller = document.querySelector('.svc-scroll');
+  if (scroller && 'IntersectionObserver' in window) {
+    var stageImgs = scroller.querySelectorAll('.svc-stage-frame img');
+    var svcItems = scroller.querySelectorAll('.svc-item');
+    var stageN = scroller.querySelector('.svc-stage-n');
+    var stageTitle = scroller.querySelector('.svc-stage-title');
+    var stageBar = scroller.querySelector('.svc-stage-bar i');
+    var current = -1;
+    function setSvc(k) {
+      if (k === current) return; current = k;
+      stageImgs.forEach(function (im, j) { im.classList.toggle('is-on', j === k); });
+      svcItems.forEach(function (it, j) { it.classList.toggle('is-active', j === k); });
+      if (stageN) stageN.textContent = String(k + 1).padStart(2, '0');
+      if (stageTitle) stageTitle.textContent = svcItems[k].querySelector('h3').textContent;
+      if (stageBar) stageBar.style.width = ((k + 1) / svcItems.length * 100) + '%';
+    }
+    var so = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setSvc(+e.target.getAttribute('data-i')); });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    svcItems.forEach(function (it) { so.observe(it); });
+    scroller.classList.add('is-live');
+    setSvc(0);
+  }
+
   /* ---------- Year ---------- */
   document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();
