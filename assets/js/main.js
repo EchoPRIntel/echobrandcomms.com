@@ -377,7 +377,7 @@
 
   /* ---------- Staggered grid children ---------- */
   if (!reduce) {
-    document.querySelectorAll('.stats.reveal, .rv-kpis.reveal, .quotes.reveal, .badges.reveal, .cov-grid.reveal, .clips, .deliv').forEach(function (g) {
+    document.querySelectorAll('.stats.reveal, .rv-kpis.reveal, .quotes.reveal, .badges.reveal, .cov-grid.reveal, .clips, .deliv, .svc-index, .tl-steps, .models').forEach(function (g) {
       Array.prototype.forEach.call(g.children, function (c, i) {
         c.classList.add('stg'); c.style.transitionDelay = (0.15 + i * 0.07).toFixed(2) + 's';
       });
@@ -392,7 +392,7 @@
         stgObs.unobserve(e.target);
       });
     }, { threshold: 0.15 });
-    document.querySelectorAll('.stats.reveal, .rv-kpis.reveal, .quotes.reveal, .badges.reveal, .cov-grid.reveal, .clips, .deliv').forEach(function (g) { stgObs.observe(g); });
+    document.querySelectorAll('.stats.reveal, .rv-kpis.reveal, .quotes.reveal, .badges.reveal, .cov-grid.reveal, .clips, .deliv, .svc-index, .tl-steps, .models').forEach(function (g) { stgObs.observe(g); });
   }
 
   /* ---------- Scroll progress ---------- */
@@ -414,7 +414,7 @@
       });
       sec.addEventListener('pointerleave', function () { svg.style.setProperty('--px', 0); svg.style.setProperty('--py', 0); });
     });
-    document.querySelectorAll('.case, .br2-cols > div').forEach(function (el) {
+    document.querySelectorAll('.case, .br2-cols > div, .svc-tile').forEach(function (el) {
       el.classList.add('tilt');
       el.addEventListener('pointermove', function (e) {
         var r = el.getBoundingClientRect();
@@ -425,6 +425,56 @@
       el.addEventListener('pointerleave', function () { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
     });
   }
+
+  /* ---------- Services: timeline progress ---------- */
+  document.querySelectorAll('[data-timeline]').forEach(function (tl) {
+    var steps = tl.querySelectorAll('.tl-step');
+    var run = function () {
+      var r = tl.getBoundingClientRect(), vh = innerHeight;
+      var p = Math.min(1, Math.max(0, (vh * 0.75 - r.top) / (r.height + vh * 0.25)));
+      if (reduce) p = 1;
+      tl.style.setProperty('--p', p.toFixed(3));
+      steps.forEach(function (s, i) { s.classList.toggle('on', p >= i / steps.length + 0.02 || p === 1); });
+    };
+    var t = false; addEventListener('scroll', function () { if (!t) { t = true; requestAnimationFrame(function () { run(); t = false; }); } }, { passive: true }); run();
+  });
+
+  /* ---------- Services: Echo system builder ---------- */
+  document.querySelectorAll('[data-cfg]').forEach(function (c) {
+    var svg = c.querySelector('.cfg-rings'), sum = c.querySelector('.cfg-sum');
+    var ns = 'http://www.w3.org/2000/svg';
+    function vals(g) { return Array.prototype.map.call(c.querySelectorAll('.opt.is-on[data-group="' + g + '"]'), function (b) { return b.getAttribute('data-val'); }); }
+    function draw() {
+      var reach = ['Single market', 'Multi-market', 'Global'].indexOf(vals('reach')[0]) + 1 || 1;
+      var level = ['Visibility', 'Authority', 'Leadership'].indexOf(vals('level')[0]) + 1 || 1;
+      var acc = vals('acc');
+      var rings = reach * 2 + 1;
+      svg.innerHTML = '';
+      for (var i = 0; i < rings; i++) {
+        var ci = document.createElementNS(ns, 'circle');
+        ci.setAttribute('cx', 100); ci.setAttribute('cy', 100); ci.setAttribute('r', 14 + i * (82 / rings));
+        ci.setAttribute('stroke-width', (0.6 + level * 0.35).toFixed(2));
+        ci.setAttribute('opacity', (1 - i / (rings + 1)).toFixed(2));
+        svg.appendChild(ci);
+      }
+      var dot = document.createElementNS(ns, 'circle'); dot.setAttribute('cx', 100); dot.setAttribute('cy', 100); dot.setAttribute('r', 6); dot.setAttribute('fill', 'currentColor'); svg.appendChild(dot);
+      acc.forEach(function (a, i) {
+        var pl = document.createElementNS(ns, 'circle'); pl.setAttribute('cx', 100); pl.setAttribute('cy', 100); pl.setAttribute('r', 92);
+        pl.setAttribute('class', 'pulse'); pl.setAttribute('stroke-width', '1'); pl.style.animationDelay = (i * 2.8 / acc.length).toFixed(2) + 's';
+        svg.appendChild(pl);
+      });
+      sum.innerHTML = vals('reach')[0] + ' reach, at <em>' + vals('level')[0].toLowerCase() + '</em> level' + (acc.length ? ', accelerated by ' + acc.join(', ').toLowerCase().replace(/, ([^,]*)$/, ' and $1') + '.' : '.');
+    }
+    c.addEventListener('click', function (e) {
+      var b = e.target.closest('.opt'); if (!b) return;
+      var g = b.getAttribute('data-group');
+      if (g === 'acc') { b.classList.toggle('is-on'); }
+      else { c.querySelectorAll('.opt[data-group="' + g + '"]').forEach(function (x) { x.classList.toggle('is-on', x === b); }); }
+      c.querySelectorAll('.opt').forEach(function (x) { x.setAttribute('aria-pressed', x.classList.contains('is-on') ? 'true' : 'false'); });
+      draw();
+    });
+    draw();
+  });
 
   /* ---------- Cursor glow on dark cards ---------- */
   if (window.matchMedia('(hover: hover)').matches) {
