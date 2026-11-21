@@ -377,7 +377,7 @@
 
   /* ---------- Staggered grid children ---------- */
   if (!reduce) {
-    document.querySelectorAll('.stats.reveal, .rv-kpis.reveal, .quotes.reveal, .badges.reveal, .cov-grid.reveal, .latest-list').forEach(function (g) {
+    document.querySelectorAll('.stats.reveal, .rv-kpis.reveal, .quotes.reveal, .badges.reveal, .cov-grid.reveal, .clips, .deliv').forEach(function (g) {
       Array.prototype.forEach.call(g.children, function (c, i) {
         c.classList.add('stg'); c.style.transitionDelay = (0.15 + i * 0.07).toFixed(2) + 's';
       });
@@ -392,7 +392,7 @@
         stgObs.unobserve(e.target);
       });
     }, { threshold: 0.15 });
-    document.querySelectorAll('.stats.reveal, .rv-kpis.reveal, .quotes.reveal, .badges.reveal, .cov-grid.reveal, .latest-list').forEach(function (g) { stgObs.observe(g); });
+    document.querySelectorAll('.stats.reveal, .rv-kpis.reveal, .quotes.reveal, .badges.reveal, .cov-grid.reveal, .clips, .deliv').forEach(function (g) { stgObs.observe(g); });
   }
 
   /* ---------- Scroll progress ---------- */
@@ -401,6 +401,29 @@
     var pt = false;
     var upd = function () { var h = document.documentElement.scrollHeight - innerHeight; prog.style.transform = 'scaleX(' + (h > 0 ? scrollY / h : 0).toFixed(4) + ')'; pt = false; };
     addEventListener('scroll', function () { if (!pt) { pt = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
+  }
+
+  /* ---------- Cursor-reactive rings + tilt ---------- */
+  if (window.matchMedia('(hover: hover)').matches && !reduce) {
+    document.querySelectorAll('.page-hero, .cta-band').forEach(function (sec) {
+      var svg = sec.querySelector('.ghost, .rings'); if (!svg) return;
+      sec.addEventListener('pointermove', function (e) {
+        var r = sec.getBoundingClientRect();
+        svg.style.setProperty('--px', (((e.clientX - r.left) / r.width) - .5) * 6);
+        svg.style.setProperty('--py', (((e.clientY - r.top) / r.height) - .5) * 6);
+      });
+      sec.addEventListener('pointerleave', function () { svg.style.setProperty('--px', 0); svg.style.setProperty('--py', 0); });
+    });
+    document.querySelectorAll('.case, .br2-cols > div').forEach(function (el) {
+      el.classList.add('tilt');
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+        el.style.setProperty('--ry', (x * 5).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', (-y * 5).toFixed(2) + 'deg');
+      });
+      el.addEventListener('pointerleave', function () { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
+    });
   }
 
   /* ---------- Cursor glow on dark cards ---------- */
