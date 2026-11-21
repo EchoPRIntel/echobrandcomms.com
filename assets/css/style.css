@@ -788,3 +788,4 @@ body.menu-open .nav { color: var(--paper); background: transparent; box-shadow: 
 .case-badge { align-self: flex-start; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; color: var(--ink); background: var(--paper); border-radius: 999px; padding: 7px 14px; }
 .weeks-badge { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; font-size: 16px; color: var(--paper); }
 .weeks-badge span { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--ink); background: var(--paper); border-radius: 999px; padding: 8px 16px; }
+.case li strong { color: var(--paper); font-weight: 500; }
