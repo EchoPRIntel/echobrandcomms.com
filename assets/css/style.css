@@ -789,3 +789,17 @@ body.menu-open .nav { color: var(--paper); background: transparent; box-shadow: 
 .weeks-badge { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; font-size: 16px; color: var(--paper); }
 .weeks-badge span { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: var(--ink); background: var(--paper); border-radius: 999px; padding: 8px 16px; }
 .case li strong { color: var(--paper); font-weight: 500; }
+
+/* ---------- Press clipping in case card ---------- */
+.clip { margin: 6px 0 0; background: #fff; color: #141311; border-radius: var(--radius); padding: 14px 14px 12px; transform: rotate(-1.2deg); box-shadow: 0 24px 40px -24px rgba(0,0,0,.6); max-width: 440px; }
+.clip figcaption { display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #5b5550; margin-bottom: 6px; }
+.clip .clip-src { font-weight: 700; color: #6001d2; letter-spacing: .06em; }
+.clip-h { font-family: var(--display); font-size: 18px; line-height: 1.2; margin-bottom: 10px; color: #141311; }
+.clip img { width: 100%; height: auto; border-radius: 2px; display: block; }
+
+.case-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 250px); gap: 22px; align-items: start; }
+.case-split .clip { margin-top: 10px; padding: 10px 10px 9px; }
+.case-split .clip-h { font-size: 15px; margin-bottom: 8px; }
+.case-split .clip figcaption { font-size: 9.5px; }
+.case-split .clip img { max-height: 200px; object-fit: cover; object-position: top; }
+@media (max-width: 900px), (pointer: coarse) { .case-split { grid-template-columns: minmax(0, 1fr); } .case-split .clip { max-width: 440px; } .case-split .clip img { max-height: none; } .case-split .clip-h { font-size: 18px; } }
