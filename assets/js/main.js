@@ -375,6 +375,18 @@
     update();
   });
 
+  /* ---------- Cursor glow on dark cards ---------- */
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.case, .client-item, .rv-panel, .br2-cols > div, .cov-card').forEach(function (el) {
+      el.classList.add('glow');
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  }
+
   /* ---------- Year ---------- */
   document.querySelectorAll('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 })();

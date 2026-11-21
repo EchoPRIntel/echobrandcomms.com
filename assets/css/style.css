@@ -876,3 +876,43 @@ body.menu-open .nav { color: var(--paper); background: transparent; box-shadow: 
 .rv-inhouse { padding: clamp(30px, 3.4vw, 52px); }
 .rv-inhouse h3 { font-size: clamp(28px, 2.6vw, 38px); line-height: 1.1; }
 .rv-cols h3 { margin-bottom: 4px; }
+
+/* ---------- Results: interactive polish ---------- */
+.glow { --mx: 50%; --my: 50%; }
+.glow:hover { background-image: radial-gradient(420px circle at var(--mx) var(--my), rgba(246,243,238,.075), transparent 60%); }
+.case, .client-item, .rv-panel, .br2-cols > div, .vs-col { transition: transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s, border-color .3s, background-color .3s; }
+.case:hover, .br2-cols > div:hover, .client-item:hover { transform: translateY(-6px); box-shadow: 0 24px 50px -24px rgba(0,0,0,.55); }
+.client-item:hover { border-color: rgba(246,243,238,.28); }
+.case::before, .case::after, .br2-cols > div::after { transition: transform 1.1s cubic-bezier(.2,.7,.2,1), border-color .6s; }
+.case:hover::before { transform: scale(1.12); border-color: rgba(246,243,238,.22); }
+.case:hover::after { transform: scale(1.22); border-color: rgba(246,243,238,.2); }
+.br2-cols > div:hover::after { transform: scale(1.15) translate(-4%, -4%); border-color: rgba(246,243,238,.2); }
+.case .num, .rv-kpis .num, .stat .num { transition: transform .45s cubic-bezier(.2,.7,.2,1); transform-origin: left bottom; }
+.case:hover .num { transform: scale(1.04); }
+.br2-cols li { transition: color .25s, transform .3s; }
+.br2-cols li:hover { color: var(--paper); transform: translateX(4px); }
+.vs-win { animation: vsPulse 3.2s ease-in-out infinite; }
+@keyframes vsPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(246,243,238,.0); } 50% { box-shadow: 0 0 0 6px rgba(246,243,238,.08); } }
+.vs-col:hover { transform: translateY(-3px); }
+.rv-kpis > div { position: relative; transition: background-color .3s; cursor: default; }
+.rv-kpis > div::after, .stat::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 1px; width: 0; background: currentColor; transition: width .55s cubic-bezier(.2,.7,.2,1); }
+.rv-kpis > div:hover::after, .stat:hover::after { width: 100%; }
+.rv-kpis > div:hover .num, .stat:hover .num { transform: translateY(-4px); }
+.stat { position: relative; transition: background-color .35s; cursor: default; }
+.stats--3 .stat:hover { background-color: rgba(255,255,255,.45); }
+.latest-list li { transition: background-color .3s, padding .35s cubic-bezier(.2,.7,.2,1); }
+.latest-list li:hover { background-color: rgba(246,243,238,.04); padding-left: 12px; padding-right: 12px; }
+.latest-list strong { transition: font-style .2s; }
+.latest-list li:hover strong { font-style: italic; }
+.awards-grid img { transition: filter .35s, opacity .35s, transform .45s cubic-bezier(.2,.7,.2,1); }
+.awards-grid img:hover { transform: scale(1.1); }
+.quote .mark { transition: transform .45s cubic-bezier(.2,.7,.2,1), color .3s; transform-origin: left top; }
+.quote:hover .mark { transform: scale(1.5); color: var(--ink); }
+.quote blockquote { transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+.quote:hover blockquote { transform: translateX(4px); }
+.cov-card { transition: background-color .3s, transform .4s cubic-bezier(.2,.7,.2,1); }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .case:hover, .br2-cols > div:hover, .client-item:hover, .vs-col:hover { transform: none; }
+  .vs-win { animation: none; }
+}
+.js .br2-cols > div.reveal.in:hover, .js .stat.reveal.in:hover { transition: opacity 1s, transform .45s cubic-bezier(.2,.7,.2,1), box-shadow .45s, background-color .35s; transition-delay: 0s; }
