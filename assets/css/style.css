@@ -774,3 +774,13 @@ body.menu-open .nav { color: var(--paper); background: transparent; box-shadow: 
 .bench-tick.tick-left::before { right: 0; }
 .bench-mark { top: 0; }
 .bench-mark::after { margin-top: 6px; }
+
+/* ---------- Client intro (latest campaign) ---------- */
+.client-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: clamp(40px, 5vw, 64px); }
+.client-item { border: 1px solid var(--line-light); border-radius: var(--radius); padding: clamp(24px, 2.4vw, 32px); display: flex; flex-direction: column; gap: 12px; }
+.client-item img { width: auto; max-width: 70%; object-fit: contain; object-position: left center; filter: brightness(0) invert(1); opacity: .9; margin-bottom: 6px; }
+.client-k { font-size: 11.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--mist); }
+.client-item p:last-child { font-size: 15px; line-height: 1.6; color: rgba(246,243,238,.8); }
+@media (max-width: 900px) { .client-row { grid-template-columns: minmax(0, 1fr); } }
+.client-logo { height: 50px; display: flex; align-items: flex-end; margin-bottom: 6px; }
+.client-logo img { margin-bottom: 0; max-height: 100%; }
