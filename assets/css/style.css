@@ -853,3 +853,4 @@ body.menu-open .nav { color: var(--paper); background: transparent; box-shadow: 
 .rv-grid--one .rv-inhouse > .vs { grid-column: 2; grid-row: 1 / span 4; }
 .rv-grid--one .rv-inhouse > .rv-body, .rv-grid--one .rv-inhouse > .rv-links { grid-column: 1; }
 @media (max-width: 900px) { .rv-grid--one .rv-inhouse { display: flex; } }
+.rv-cols { margin-top: 16px; }
